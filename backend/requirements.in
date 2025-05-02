@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+redis
+dramatiq
+python-dotenv
+python-multipart
+dramatiq[watch]
+asgiref
+httpx
