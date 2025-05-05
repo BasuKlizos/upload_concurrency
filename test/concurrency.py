@@ -4,7 +4,7 @@ import uuid
 import traceback
 
 error_count, success_count= 0, 0
-
+timeout = httpx.Timeout(60.0)
 
 # async def upload_zip():
 #     try:
@@ -91,7 +91,7 @@ async def upload_multiple_with_bg_task(n: int):
 
     for i in range(n):
         print(f"Starting task {i}")
-        await asyncio.sleep(1)
+        # await asyncio.sleep(1)
         # asyncio.create_task(upload_zip())
         tasks.append(
             asyncio.create_task(upload_zip())
@@ -110,6 +110,6 @@ if __name__ == "__main__":
     # asyncio.run(upload_zip())
     # asyncio.run(upload_multiple(30))
 
-    asyncio.run(upload_multiple_with_bg_task(100))
+    asyncio.run(upload_multiple_with_bg_task(15))
     print(f"Success_count: {success_count}")
     print(f"Error_count: {error_count}")

@@ -3,7 +3,7 @@ import random
 
 from backend.corn_jobs.corn_jobs import logger
 
-delay = random.uniform(10, 15)
+delay = random.uniform(0.1, 0.5)
 
 async def extract_text(file_path):
     if file_path.endswith(".pdf"):
