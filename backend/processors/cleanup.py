@@ -3,7 +3,7 @@ import asyncio
 import random
 import shutil
 
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 from backend.utils.create_batch_id_and_temp import get_temp_path
 
 delay = random.uniform(0.1, 0.5)

@@ -4,7 +4,7 @@ import zipfile
 import io
 import shutil
 
-from fastapi import FastAPI, Form, HTTPException, status, File, UploadFile, Depends
+from fastapi import FastAPI, Form, HTTPException, status, File, UploadFile, Depends, Request
 from fastapi.responses import JSONResponse
 from typing import List
 
@@ -12,7 +12,7 @@ from typing import List
 # from backend.utils.background_tasks import process_zip_extracted_files
 from backend.utils.background_tasks import background_processing
 from backend.utils.create_batch_id_and_temp import create_batch_id, get_temp_path
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 # from app.config import REDIS_URL
 
 app = FastAPI()
@@ -34,6 +34,7 @@ async def health():
     response_class=JSONResponse,
 )
 async def upload_candidates(
+    request: Request,
     job_id: str = Form(..., description="ID of the job to upload candidates for"),
     batch_name: str = Form(..., description="Name of the batch"),
     files: List[UploadFile] = File(...),
@@ -45,13 +46,16 @@ async def upload_candidates(
     #         detail="Batch name already taken",
     #     )
 
-    print("checking...")
+    client_ip = request.client.host
+    logger.info(f"Received upload request from IP: {client_ip} | Job ID: {job_id} | Batch Name: {batch_name}")
+
     await asyncio.sleep(0.1)
 
     batch_id = create_batch_id()
     print(f"batch_id---: {batch_id}")
     temp_dir = os.path.join(get_temp_path(), str(batch_id))
     os.makedirs(temp_dir, exist_ok=True)
+    logger.info(f"Created temporary directory: {temp_dir}")
     
     processed_files = []
     for file in files:
@@ -63,17 +67,21 @@ async def upload_candidates(
             zip_file.extractall(extracted_dir)
         
         processed_files.append(extracted_dir)
-    print("--------processed_files-----",processed_files)
+    
+    logger.info(f"[ZIP EXTRACTED] Batch ID: {batch_id} | Files Processed: {len(processed_files)}")
+    # print("--------processed_files-----",processed_files)
 
     # Trigger background processing for each extracted directory
     # for extracted_dir in processed_files:
     #     logger.info("Sending background task to Dramatiq")
     #     process_zip_extracted_files.send(extracted_dir, batch_id=batch_id, job_id=job_id, user_id="user_data", company_id="company_id")
     #     # process_zip_extracted_files.send(extracted_dir=extracted_dir)
-    logger.info("Sending background task to Dramatiq")
+    # logger.info("Sending background task to Dramatiq")
+    
+
 
     background_processing.send(processed_files, batch_id=batch_id, job_id=job_id, user_id="hasbdbh", company_id="hga625")
-    
+    logger.info(f"[TASK DISPATCHED] Batch ID: {batch_id} sent for background processing")
 
     return JSONResponse(
         content={"msg": "Processing of candidates started.", "batch_id": str(batch_id), "status": True},

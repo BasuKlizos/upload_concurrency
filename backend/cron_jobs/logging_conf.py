@@ -1,17 +1,19 @@
-import logging
+from loguru import logger
+import os
+import sys
 
-logger = logging.getLogger("dramatiq_worker")
-logger.setLevel(logging.INFO)
+LOG_DIR = "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
 
-file_handler = logging.FileHandler("worker.log")
-file_handler.setLevel(logging.INFO)
+logger.remove()  
 
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
+logger.add(
+    os.path.join(LOG_DIR, "app.log"),
+    rotation="500 KB",      
+    retention="7 days",     
+    compression="zip",       
+    level="INFO",
+    format="{time} | {level} | {message}",
+)
 
-logger.addHandler(file_handler)  # Now logger is defined!
-
-# Also log to console (optional)
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
+logger.add(sys.stdout, level="INFO", format="{time} | {level} | {message}")

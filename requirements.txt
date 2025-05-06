@@ -21,7 +21,9 @@ cffi==1.17.1
 click==8.1.8
     # via uvicorn
 colorama==0.4.6
-    # via click
+    # via
+    #   click
+    #   loguru
 dramatiq[watch]==1.17.1
     # via -r requirements.in
 fastapi==0.115.12
@@ -42,6 +44,8 @@ idna==3.10
     # via
     #   anyio
     #   httpx
+loguru==0.7.3
+    # via -r requirements.in
 prometheus-client==0.21.1
     # via dramatiq
 pycparser==2.22
@@ -77,6 +81,8 @@ watchdog==6.0.0
     #   watchdog-gevent
 watchdog-gevent==0.2.1
     # via dramatiq
+win32-setctime==1.2.0
+    # via loguru
 zope-event==5.0
     # via gevent
 zope-interface==7.2
