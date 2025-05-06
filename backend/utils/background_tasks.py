@@ -14,6 +14,9 @@ dramatiq.set_broker(broker)
 
 
 
+broker.declare_queue("zip-file-process")
+broker.declare_queue("process_zip_extracted_files")
+
 @dramatiq.actor(queue_name="zip-file-process")
 def background_processing(
     extracted_dir: list, batch_id: str, job_id: str, user_id: str, company_id: str
