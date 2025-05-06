@@ -1,7 +1,7 @@
 import asyncio
 import random
 
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 
 delay = random.uniform(10, 15)
 

@@ -2,7 +2,7 @@ import asyncio
 import random
 from backend.processors.cv_processor import _process_files
 from backend.utils.compatibility import get_analysis
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 # from utils.db import candidates, candidates_errors
 
 def valid_results(result):
