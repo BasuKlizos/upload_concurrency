@@ -11,7 +11,7 @@ async def process_candidates_and_vectorize():
     async def embed_and_store():
         logger.info(f"Simulating delay before embedding: {delay:.3f}s")
         await asyncio.sleep(delay)
-        await _create_embeddings()
+        await _create_embeddings()  
 
     await embed_and_store()
     logger.info("Finished candidate embedding and vectorization")
