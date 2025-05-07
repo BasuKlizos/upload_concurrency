@@ -5,7 +5,7 @@ import dramatiq
 from asgiref.sync import async_to_sync
 
 from backend.processors.file_chunker import _process_file_chunks
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 async def _process_zip_extracted_files(extracted_dir: str, batch_id: str, job_id: str, user_id: str, company_id: str):
     # print(f"Processing zip file: {extracted_dir}")
     logger.info(f"Processing zip file: {extracted_dir}")

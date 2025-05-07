@@ -4,7 +4,7 @@ import random
 from backend.utils.parser import parse_text
 from backend.utils.extract_helper import extract_text
 from backend.utils.s3_uploader import upload_file_to_s3
-from backend.corn_jobs.corn_jobs import logger
+from backend.cron_jobs.logging_conf import logger
 
 delay = random.uniform(0.1, 0.5)
 
