@@ -4,6 +4,8 @@
 #
 #    pip-compile '.\requirements.in'
 #
+aiofiles==24.1.0
+    # via -r .\requirements.in
 annotated-types==0.7.0
     # via pydantic
 anyio==4.9.0
@@ -23,7 +25,11 @@ cffi==1.17.1
 click==8.1.8
     # via uvicorn
 colorama==0.4.6
-    # via click
+    # via
+    #   click
+    #   loguru
+dnspython==2.7.0
+    # via pymongo
 dramatiq[watch]==1.17.1
     # via -r .\requirements.in
 exceptiongroup==1.2.2
@@ -46,6 +52,21 @@ idna==3.10
     # via
     #   anyio
     #   httpx
+loguru==0.7.3
+    # via -r .\requirements.in
+lxml==5.4.0
+    # via python-docx
+motor==3.7.0
+    # via -r .\requirements.in
+packaging==25.0
+    # via pytesseract
+pdf2image==1.17.0
+    # via -r .\requirements.in
+pillow==11.2.1
+    # via
+    #   -r .\requirements.in
+    #   pdf2image
+    #   pytesseract
 prometheus-client==0.21.1
     # via dramatiq
 pycparser==2.22
@@ -54,6 +75,16 @@ pydantic==2.11.3
     # via fastapi
 pydantic-core==2.33.1
     # via pydantic
+pymongo==4.12.1
+    # via
+    #   -r .\requirements.in
+    #   motor
+pypdf2==3.0.1
+    # via -r .\requirements.in
+pytesseract==0.3.13
+    # via -r .\requirements.in
+python-docx==1.1.2
+    # via -r .\requirements.in
 python-dotenv==1.1.0
     # via -r .\requirements.in
 python-multipart==0.0.20
@@ -71,6 +102,7 @@ typing-extensions==4.13.2
     #   fastapi
     #   pydantic
     #   pydantic-core
+    #   python-docx
     #   typing-inspection
     #   uvicorn
 typing-inspection==0.4.0
@@ -83,6 +115,8 @@ watchdog==6.0.0
     #   watchdog-gevent
 watchdog-gevent==0.2.1
     # via dramatiq
+win32-setctime==1.2.0
+    # via loguru
 zope-event==5.0
     # via gevent
 zope-interface==7.2

@@ -3,7 +3,16 @@ uvicorn
 redis
 dramatiq
 python-dotenv
+pymongo
 python-multipart
 dramatiq[watch]
 asgiref
 httpx
+loguru
+aiofiles
+motor
+python-docx
+PyPDF2
+pdf2image 
+pytesseract 
+pillow

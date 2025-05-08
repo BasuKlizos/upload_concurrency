@@ -57,11 +57,23 @@ async def upload_zip():
         zip_path = r"C:\Users\Basudev Samanta\Downloads\sample-report_new.zip"
 
         # Prepare the file to send as multipart
+        # with open(zip_path, "rb") as f:
+        #     files = {"files": (f"{uuid.uuid4().hex[:5]}file.zip", f, "application/zip")}
+
+        #     async with httpx.AsyncClient() as client:
+        #         response = await client.post(url, data=form_data, files=files)
+
         with open(zip_path, "rb") as f:
-            files = {"files": (f"{uuid.uuid4().hex[:5]}file.zip", f, "application/zip")}
+            filename = f"{uuid.uuid4().hex[:5]}_candidates.zip"
+            
+            # `files` must be a list of tuples, because FastAPI expects a List[UploadFile]
+            files = [
+                ("files", (filename, f, "application/zip"))
+            ]
 
             async with httpx.AsyncClient() as client:
                 response = await client.post(url, data=form_data, files=files)
+
 
         print(f"Status code: {response.status_code}")
         # print("Response body:", response.text)
@@ -110,6 +122,6 @@ if __name__ == "__main__":
     # asyncio.run(upload_zip())
     # asyncio.run(upload_multiple(30))
 
-    asyncio.run(upload_multiple_with_bg_task(15))
+    asyncio.run(upload_multiple_with_bg_task(10))
     print(f"Success_count: {success_count}")
     print(f"Error_count: {error_count}")
